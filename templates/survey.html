@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kreatív generálás – kreatív.ai</title>
+  <link rel="stylesheet" href="/static/css/survey.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">kreatív<span class="accent">.</span>ai</a>
+    <span class="nav-back-label">← Vissza a főoldalra</span>
+  </div>
+</nav>
+
+<!-- MAIN WRAPPER -->
+<div class="survey-wrap">
+
+  <!-- ====== STEP INDICATOR ====== -->
+  <div class="step-indicator" id="step-indicator">
+    <div class="step-item active" data-step="1">
+      <div class="step-dot"><span>1</span></div>
+      <div class="step-label">Vállalkozás</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step-item" data-step="2">
+      <div class="step-dot"><span>2</span></div>
+      <div class="step-label">Ajánlat</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step-item" data-step="3">
+      <div class="step-dot"><span>3</span></div>
+      <div class="step-label">Stílus</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step-item" data-step="4">
+      <div class="step-dot"><span>4</span></div>
+      <div class="step-label">Generálás</div>
+    </div>
+  </div>
+
+  <!-- ====== FORM STEPS ====== -->
+  <form id="survey-form" novalidate>
+
+    <!-- STEP 1: Vállalkozás -->
+    <div class="step-panel active" data-step="1">
+      <div class="step-header">
+        <h1 class="step-title">Vállalkozás alapadatai</h1>
+        <p class="step-desc">Ezekből az adatokból tudja az AI, kinek és miről ír hirdetést.</p>
+      </div>
+
+      <div class="card">
+        <div class="field-row two-col">
+          <div class="field">
+            <label for="brand_name">Márkanév / Vállalkozás neve <span class="req">*</span></label>
+            <input type="text" id="brand_name" name="brand_name"
+              placeholder="pl. Simoelektriks" required autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="service_type">Szolgáltatás típusa <span class="req">*</span></label>
+            <input type="text" id="service_type" name="service_type"
+              placeholder="pl. Klímaszerelés, Villanyszerelő" required>
+          </div>
+        </div>
+
+        <div class="field-row two-col">
+          <div class="field">
+            <label for="phone">Telefonszám <span class="req">*</span></label>
+            <input type="text" id="phone" name="phone"
+              placeholder="pl. (70) 537 2374" required>
+          </div>
+          <div class="field">
+            <label for="website">Weboldal <span class="req">*</span></label>
+            <input type="text" id="website" name="website"
+              placeholder="pl. simoelektriks.com" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="target_area">Területi lefedettség</label>
+          <input type="text" id="target_area" name="target_area"
+            placeholder="pl. Budapest és 50 km-es körzet, Pest megye">
+          <span class="field-hint">Hol dolgozol? Ez megjelenik a hirdetés szövegében.</span>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <div></div>
+        <button type="button" class="btn-next" data-next="2">
+          Következő <span class="btn-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Ajánlat -->
+    <div class="step-panel" data-step="2">
+      <div class="step-header">
+        <h1 class="step-title">Fő ajánlat és előnyök</h1>
+        <p class="step-desc">Mi a legvonzóbb ajánlatod? Miben vagy jobb a konkurenciánál?</p>
+      </div>
+
+      <div class="card">
+        <div class="field">
+          <label for="main_offer">Fő ajánlat / Promóció <span class="req">*</span></label>
+          <input type="text" id="main_offer" name="main_offer"
+            placeholder="pl. Ingyenes helyszíni felmérés, 10% kedvezmény május végéig" required>
+          <span class="field-hint">Ez lesz a hirdetések fő vonzereje.</span>
+        </div>
+
+        <div class="field">
+          <label>
+            Legfontosabb előnyök / USP-k <span class="req">*</span>
+            <span class="field-hint">Minimum 3 előny – ezekből lesznek a bullet pointok a hirdetésben</span>
+          </label>
+          <div id="benefits-list">
+            <div class="benefit-row">
+              <div class="benefit-num">1</div>
+              <input type="text" name="benefits[]" placeholder="pl. Helyi szakember 50 km-es körzetben">
+              <button type="button" class="btn-remove-benefit">✕</button>
+            </div>
+            <div class="benefit-row">
+              <div class="benefit-num">2</div>
+              <input type="text" name="benefits[]" placeholder="pl. Ingyenes helyszíni felmérés">
+              <button type="button" class="btn-remove-benefit">✕</button>
+            </div>
+            <div class="benefit-row">
+              <div class="benefit-num">3</div>
+              <input type="text" name="benefits[]" placeholder="pl. Klíma + villanyszerelő egy kézből">
+              <button type="button" class="btn-remove-benefit">✕</button>
+            </div>
+          </div>
+          <button type="button" class="btn-add-benefit" id="add-benefit">
+            <span>+</span> Előny hozzáadása
+          </button>
+        </div>
+
+        <div class="field">
+          <label for="additional_info">Egyéb tudnivaló, különleges kérés</label>
+          <textarea id="additional_info" name="additional_info" rows="3"
+            placeholder="pl. Szezonális akció, konkrét célcsoport (fiatal párok, ingatlanok), ne szerepeljen X téma..."></textarea>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="btn-back" data-back="1">← Vissza</button>
+        <button type="button" class="btn-next" data-next="3">
+          Következő <span class="btn-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Stílus -->
+    <div class="step-panel" data-step="3">
+      <div class="step-header">
+        <h1 class="step-title">Stílus és extras</h1>
+        <p class="step-desc">Milyen hangnemben szólítsa meg a célközönséged az AI?</p>
+      </div>
+
+      <div class="card">
+        <div class="field">
+          <label>Hirdetések hangneme <span class="req">*</span></label>
+          <div class="tone-grid">
+            <label class="tone-option">
+              <input type="radio" name="tone" value="sürgős" checked>
+              <div class="tone-card">
+                <span class="tone-emoji">🔥</span>
+                <span class="tone-name">Sürgős</span>
+                <span class="tone-desc">Most kell cselekedni, ne veszítsen időt</span>
+              </div>
+            </label>
+            <label class="tone-option">
+              <input type="radio" name="tone" value="barátságos">
+              <div class="tone-card">
+                <span class="tone-emoji">😊</span>
+                <span class="tone-name">Barátságos</span>
+                <span class="tone-desc">Közvetlen, emberi, megbízható</span>
+              </div>
+            </label>
+            <label class="tone-option">
+              <input type="radio" name="tone" value="szakmai">
+              <div class="tone-card">
+                <span class="tone-emoji">🎯</span>
+                <span class="tone-name">Szakmai</span>
+                <span class="tone-desc">Kompetens, megbízható szakértő</span>
+              </div>
+            </label>
+            <label class="tone-option">
+              <input type="radio" name="tone" value="vicces">
+              <div class="tone-card">
+                <span class="tone-emoji">😄</span>
+                <span class="tone-name">Vicces / Meglepő</span>
+                <span class="tone-desc">Pattern-interrupt, humoros hang</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Hány kreatívot generáljak?</label>
+          <div class="count-selector">
+            <label class="count-option">
+              <input type="radio" name="num_creatives" value="3">
+              <div class="count-card">
+                <div class="count-num">3</div>
+                <div class="count-label">kreatív</div>
+                <div class="count-time">~45 mp</div>
+              </div>
+            </label>
+            <label class="count-option">
+              <input type="radio" name="num_creatives" value="6" checked>
+              <div class="count-card count-card--highlight">
+                <div class="count-badge">Ajánlott</div>
+                <div class="count-num">6</div>
+                <div class="count-label">kreatív</div>
+                <div class="count-time">~90 mp</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Referencia képek feltöltése <span class="optional-badge">Opcionális</span></label>
+          <div class="file-drop-zone" id="file-drop-zone">
+            <input type="file" id="reference_images" name="reference_images" multiple
+              accept="image/jpeg,image/png,image/webp" class="file-input">
+            <div class="file-drop-content">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <p>Húzd ide a képeket, vagy <span class="link-text">kattints a tallózáshoz</span></p>
+              <p class="file-hint">JPG, PNG, WEBP – max. 5 kép</p>
+            </div>
+          </div>
+          <div id="file-preview" class="file-preview"></div>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="btn-back" data-back="2">← Vissza</button>
+        <button type="submit" class="btn-generate" id="btn-generate">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          Generálás indítása
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- ====== STEP 4: GENERATING ====== -->
+  <div class="step-panel" id="generating-panel" data-step="4">
+    <div class="step-header">
+      <h1 class="step-title" id="gen-title">Generálás folyamatban…</h1>
+      <p class="step-desc" id="gen-desc">Az AI dolgozik. Ez 60–120 másodpercet vesz igénybe.</p>
+    </div>
+
+    <div class="generating-card" id="generating-card">
+      <div class="gen-progress-wrap">
+        <div class="gen-progress-bg">
+          <div class="gen-progress-fill" id="gen-progress-fill"></div>
+        </div>
+        <div class="gen-progress-pct" id="gen-progress-pct">0%</div>
+      </div>
+
+      <div class="gen-steps-list">
+        <div class="gen-step-item" id="gsi-copy">
+          <div class="gsi-icon gsi-waiting">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="gsi-text">
+            <strong>Hirdetési szövegek</strong>
+            <span>GPT-4o megírja a 6 pattern-interrupt szöget</span>
+          </div>
+          <div class="gsi-status" id="gsi-copy-status">Várakozik</div>
+        </div>
+        <div class="gen-step-item" id="gsi-images">
+          <div class="gsi-icon gsi-waiting">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <div class="gsi-text">
+            <strong>Képek generálása</strong>
+            <span>DALL-E 3 generálja a háttérképeket + összerakja a mockupokat</span>
+          </div>
+          <div class="gsi-status" id="gsi-images-status">Várakozik</div>
+        </div>
+        <div class="gen-step-item" id="gsi-pdf">
+          <div class="gsi-icon gsi-waiting">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="gsi-text">
+            <strong>PDF összeállítása</strong>
+            <span>Borítólappal és 6 kreatív oldallal</span>
+          </div>
+          <div class="gsi-status" id="gsi-pdf-status">Várakozik</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== RESULTS ====== -->
+    <div class="results-section hidden" id="results-section">
+      <div class="results-header">
+        <div class="results-check">✓</div>
+        <div>
+          <h2 id="results-title">Kész! 6 kreatív vár rád.</h2>
+          <p id="results-sub">Nézd meg az előnézetet, majd töltsd le a PDF csomagot.</p>
+        </div>
+        <a id="download-btn" href="#" class="btn-download-pdf">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          PDF letöltése
+        </a>
+      </div>
+
+      <div class="creatives-grid" id="creatives-grid">
+        <!-- Cards injected by JS -->
+      </div>
+
+      <div class="results-footer">
+        <a id="download-btn-bottom" href="#" class="btn-download-pdf btn-download-pdf--lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Teljes PDF csomag letöltése
+        </a>
+        <button class="btn-new-gen" onclick="location.href='/felmero'">Új generálás</button>
+      </div>
+    </div>
+
+    <!-- ERROR -->
+    <div class="error-card hidden" id="error-card">
+      <div class="error-icon-wrap">!</div>
+      <h2>Hiba történt</h2>
+      <p id="error-msg"></p>
+      <button class="btn-new-gen" onclick="location.href='/felmero'">Újra próbálom</button>
+    </div>
+  </div>
+
+</div><!-- /.survey-wrap -->
+
+<!-- IMAGE LIGHTBOX -->
+<div class="lightbox hidden" id="lightbox">
+  <div class="lightbox-bg" id="lightbox-bg"></div>
+  <button class="lightbox-close" id="lightbox-close">✕</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+</div>
+
+<script src="/static/js/survey.js"></script>
+</body>
+</html>
